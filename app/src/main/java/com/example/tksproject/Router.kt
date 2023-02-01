@@ -46,16 +46,24 @@ interface GetHotel{
         @Path("maxCharge") maxCharge: String
     ): Call<Hotels>
 
-    @GET("hotel/{prefectureCode}/{cityCode}/{checkin}/{checkout}/{adultNum}/{maxCharge}/{detailedCity}")
+    @GET("hotel/{prefecture}/{city}/{checkin}/{checkout}/{adultNum}/{maxcharge}/{detailedCity}")
     fun getHoteldcity(
         @Header("Authorization") authorization: String,
-        @Path("prefectureCode") prefectureCode: String,
-        @Path("cityCode") cityCode: String,
+        @Path("prefecture") prefectureCode: String,
+        @Path("city") cityCode: String,
         @Path("checkin") checkin: String,
         @Path("checkout") checkout: String,
         @Path("adultNum") adultNum: String,
-        @Path("maxCharge") maxCharge: String,
+        @Path("maxcharge") maxCharge: String,
         @Path("detailedCity") detailedCity: String
 
     ): Call<Hotels>
+}
+
+interface GetTransport{
+    @POST("scrape/transports")
+    //    fun postRawRequestForPosts(@Body body:RequestBody):Call<ResponseBody>
+    fun scrapeTransports(@Body body: transportsRequest,
+                         @Header ("Authorization") authorization: String
+    ):Call<transport>
 }

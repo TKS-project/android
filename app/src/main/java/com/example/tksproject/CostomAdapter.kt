@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 
@@ -121,9 +122,10 @@ class HotelListAdapter (val context: Context, val hotelList: MutableList<hotel>)
         val nearStation = view.findViewById<TextView>(R.id.nearStation)
         val access = view.findViewById<TextView>(R.id.access)
         val reviewAvg = view.findViewById<TextView>(R.id.reviewAvg)
+        val icon = view.findViewById<ImageView>(R.id.imageIcon)
 
         val hotel = hotelList[position]
-        //Picasso.get().load(user.videoThumbnail).into(view.imageIcon)//insert thumbnail
+        Picasso.get().load(hotel.hotelThumbnailUrl).into(icon)//insert thumbnail
         name.text = hotel.hotelName
         no.text = hotel.hotelNo.toString()
         minCharge.text = hotel.hotelMinCharge.toString()
@@ -133,4 +135,41 @@ class HotelListAdapter (val context: Context, val hotelList: MutableList<hotel>)
 
         return view
     }
+}
+
+class TransportsAdapter(val context: Context, val tList: MutableList<transports>): BaseAdapter() {
+    val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    override fun getItem(position: Int): Any {
+        return tList[position]
+    }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()    //元々はreturn 0
+    }
+    override fun getCount(): Int {
+        return tList.size
+    }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        //繰り返すリストの中身のXMLを指定
+        val view: View = layoutInflater.inflate(R.layout.row_transport_view, parent, false)
+        val type = view.findViewById<TextView>(R.id.type)
+        val time = view.findViewById<TextView>(R.id.time)
+        val name = view.findViewById<TextView>(R.id.name)
+        val url = view.findViewById<TextView>(R.id.url)
+        val plathome = view.findViewById<TextView>(R.id.plathome)
+
+
+        val trans = tList[position]
+        //Picasso.get().load(hotel.hotelThumbnailUrl).into(icon)//insert thumbnail
+
+        type.text = trans.type
+        time.text = trans.time
+        name.text = trans.name
+        url.text = trans.url
+        plathome.text = trans.plathome
+
+
+        return view
+    }
+
+
 }

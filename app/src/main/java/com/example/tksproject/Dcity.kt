@@ -30,7 +30,6 @@ class Dcity : AppCompatActivity() {
         val prefectureId = intent.getStringExtra("PREFECTURE_ID")!!
         val cityId = intent.getStringExtra("CITY_ID")!!
         val cityCode = intent.getStringExtra("CITY_CODE")!!
-        val isDcityInclude = intent.getBooleanExtra("IS_DCITY_INCLUDE", true)
         lifecycleScope.launch {
             var response = apiForCity.getDetailedCity(authorization = token, cityId = cityId)
 
@@ -61,23 +60,17 @@ class Dcity : AppCompatActivity() {
                         val dCity = response.body()!!.data[item].Name
 
                         //var intent = Intent(applicationContext, CheckDcityExist::class.java)
+                        var intent = Intent(applicationContext, HotelList::class.java)
 
                         intent.putExtra("TOKEN", token)
-                        intent.putExtra("PREFECTURE_ID", prefectureId)
                         intent.putExtra("PREFECTURE_CODE", prefectureCode)
-                        intent.putExtra("CITY_ID", cityId.toString())
                         intent.putExtra("CITY_CODE", cityCode)
-                        intent.putExtra("DETAILED_CITY_ID", dCityId.toString())
                         intent.putExtra("DETAILED_CITY_CODE", dCityCode)
                         intent.putExtra("DETAILED_CITY", dCity)
-                        var intent = Intent(applicationContext, HotelList::class.java)
 
 
                         Toast.makeText(
-                            applicationContext,
-                            dCity + "がタップされました!!!!!!!!!!!!!!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            applicationContext, token+":"+prefectureCode+":"+cityCode+":"+dCityCode, Toast.LENGTH_SHORT).show()
                         startActivity(intent)
                     }
 

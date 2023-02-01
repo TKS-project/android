@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TKSproject"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HotelList"></activity>
+        <activity android:name=".Transport"></activity>
+        <activity android:name=".HotelList" />
         <activity android:name=".Dcity" />
         <activity android:name=".CheckDcityExist" />
         <activity android:name=".City" />

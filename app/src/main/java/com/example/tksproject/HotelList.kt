@@ -1,5 +1,6 @@
 package com.example.tksproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,34 +31,11 @@ class HotelList : AppCompatActivity() {
         Toast.makeText(application,"hotel選択画面", Toast.LENGTH_SHORT).show()
         Log.v("hotellistログ!", "start!!!!!!!!!")
 
-//        var token: String
-//        var prefectureCode: String
-//        var prefectureId: String
-//        var cityId: String
-//        var cityCode: String
-//        var detailedCityId: String
-//        var detailedCityCode: String
-//        var detailedCity: String
 
-        val isDcityInclude = intent.getBooleanExtra("IS_DCITY_INCLUDE", false)
-//        if (isDcityInclude) {
-//            token = intent.getStringExtra("TOKEN")!!
-//            prefectureCode = intent.getStringExtra("PREFECTURE_CODE")!!
-//            prefectureId = intent.getStringExtra("PREFECTURE_ID")!!
-//            cityId = intent.getStringExtra("CITY_ID")!!
-//            cityCode = intent.getStringExtra("CITY_CODE")!!
-//            detailedCityId = intent.getStringExtra("DETAILED_CITY_ID")!!
-//            detailedCityCode = intent.getStringExtra("DETAILED_CITY_CODE")!!
-//            detailedCity = intent.getStringExtra("DETAILED_CITY")!!
-//
-//        }
-        var token = intent.getStringExtra("TOKEN")!!
-        var prefectureCode = intent.getStringExtra("PREFECTURE_CODE")!!
-        var prefectureId = intent.getStringExtra("PREFECTURE_ID")!!
-        var cityId = intent.getStringExtra("CITY_ID")!!
-        var cityCode = intent.getStringExtra("CITY_CODE")!!
-        var detailedCityId = intent.getStringExtra("DETAILED_CITY_ID")!!
-        var detailedCityCode = intent.getStringExtra("DETAILED_CITY_CODE")!!
+        val token = intent.getStringExtra("TOKEN")!!
+        val prefectureCode = intent.getStringExtra("PREFECTURE_CODE")!!
+        val cityCode = intent.getStringExtra("CITY_CODE")!!
+        val detailedCityCode = intent.getStringExtra("DETAILED_CITY_CODE")!!
         var detailedCity = intent.getStringExtra("DETAILED_CITY")!!
         Log.v("!!!!!!!!!!!!!!!!!!", prefectureCode)
         Log.v("!!!!!!!!!!!!!!!!!", cityCode)
@@ -81,10 +59,17 @@ class HotelList : AppCompatActivity() {
                         hotelList.add(i)
                     }
                     Log.v("#######レスポンス", hotelList[1].access)
-//                    var list_view = findViewById<ListView>(R.id.hotel_list_view)
-//
-//                    val adapter = HotelListAdapter(getApplicationContext(), hotelList)
-//                    list_view.adapter = adapter
+                    var list_view = findViewById<ListView>(R.id.hotel_list_view)
+
+                    val adapter = HotelListAdapter(getApplicationContext(), hotelList)
+                    list_view.adapter = adapter
+                    list_view.setOnItemClickListener { parent, view, position, id ->
+                        Log.v("###tag###", "項目がタップされました")
+                        val item = parent.getItemIdAtPosition(position).toInt()
+                        var intent = Intent(applicationContext, Transport::class.java)
+                        intent.putExtra("TOKEN", token)
+                        startActivity(intent)
+                    }
                 }
 
                 override fun onFailure(call: Call<Hotels>, t: Throwable) {
